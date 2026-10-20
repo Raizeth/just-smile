@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff0f6">
+<title>A Little Game for My Love ♡</title>
+<style>
+  :root {
+    --pink: #ff8db5;
+    --hot: #e85d91;
+    --deep: #8f4267;
+    --cream: #fffafc;
+    --soft: #fff0f6;
+    --lavender: #f0eaff;
+    --shadow: 0 18px 50px rgba(183, 91, 133, .14);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; overflow-x: hidden;
+    font-family: ui-rounded, "Trebuchet MS", system-ui, -apple-system, sans-serif;
+    color: var(--deep);
+    background:
+      radial-gradient(circle at 10% 10%, #ffe2ee 0, transparent 28%),
+      radial-gradient(circle at 90% 25%, #f0eaff 0, transparent 30%),
+      linear-gradient(160deg, #fff9fc, #fff0f6 55%, #fffafc);
+  }
+  button { font: inherit; cursor: pointer; }
+  .floaties { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .floaty { position: absolute; bottom: -50px; opacity: .55; animation: floatUp linear infinite; }
+  @keyframes floatUp { to { transform: translateY(-115vh) rotate(25deg); opacity: 0; } }
+  .wrap { position: relative; z-index: 1; width: min(100% - 28px, 620px); margin: 0 auto; padding: 24px 0 40px; }
+  header { text-align: center; padding: 10px 0 16px; }
+  .tiny-label { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: #bd6d91; font-weight: 800; }
+  h1 { font-size: clamp(2rem, 8vw, 3.3rem); line-height: 1.02; margin: 10px 0; color: #d94f87; letter-spacing: -.045em; }
+  .subtitle { max-width: 440px; margin: 0 auto; line-height: 1.65; font-size: 1rem; color: #94627a; }
+  .card { background: rgba(255,255,255,.86); border: 1px solid rgba(255,177,207,.7); border-radius: 28px; padding: clamp(20px, 5vw, 32px); box-shadow: var(--shadow); backdrop-filter: blur(8px); }
+  .hero-art { width: 150px; height: 135px; margin: 8px auto 12px; display: grid; place-items: center; font-size: 5.2rem; background: linear-gradient(135deg, #ffe2ee, #f2eaff); border-radius: 45% 55% 49% 51% / 52% 44% 56% 48%; animation: bob 3s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-6px) rotate(2deg); } }
+  .center { text-align: center; }
+  h2 { margin: 0 0 10px; font-size: clamp(1.45rem, 5vw, 2rem); color: #cc4c82; }
+  p { line-height: 1.7; }
+  .muted { color: #956a7f; }
+  .btn { border: 0; border-radius: 999px; padding: 14px 20px; min-height: 48px; font-weight: 800; transition: transform .15s, box-shadow .15s; }
+  .btn:active { transform: scale(.97); }
+  .primary { color: white; background: linear-gradient(135deg, #ff8db5, #e85d91); box-shadow: 0 8px 20px #ef8bb455; }
+  .secondary { color: #bf4e7d; background: #fff0f6; border: 1px solid #ffd0e1; }
+  .btnrow { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .progress-wrap { margin: 0 0 16px; }
+  .progress-top { display: flex; justify-content: space-between; font-size: .82rem; font-weight: 800; color: #b15d82; margin-bottom: 8px; }
+  .progress { height: 9px; border-radius: 999px; background: #ffe2ee; overflow: hidden; }
+  .bar { height: 100%; width: 0; background: linear-gradient(90deg, #ffb1cd, #e85d91); border-radius: inherit; transition: width .4s ease; }
+  .choices { display: grid; gap: 10px; margin-top: 18px; }
+  .choice { text-align: left; border: 1.5px solid #f8c8db; background: #fffafd; color: #8f4267; border-radius: 18px; padding: 15px 16px; line-height: 1.4; transition: .18s; }
+  .choice:hover, .choice:focus-visible { border-color: #ec7da8; background: #fff0f6; transform: translateY(-1px); outline: none; }
+  .choice.selected { border-color: #e85d91; background: #ffe5ef; box-shadow: 0 0 0 3px #ffdeeb; }
+  .feedback { min-height: 54px; margin-top: 14px; border-radius: 16px; padding: 12px 14px; background: #fff5f9; color: #a04e73; line-height: 1.5; }
+  .hidden { display: none !important; }
+  .heart-board { display: flex; gap: 9px; justify-content: center; margin: 18px 0; }
+  .heart-token { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #fff0f6; font-size: 1.35rem; border: 1px dashed #f3afca; }
+  .heart-token.earned { background: #ffe0ec; border-style: solid; animation: pop .35s ease; }
+  @keyframes pop { 50% { transform: scale(1.2); } }
+  .letter { background: #fff9fc; border: 1px dashed #f0a5c2; border-radius: 20px; padding: 22px; text-align: left; line-height: 1.8; white-space: pre-line; }
+  .signature { text-align: right; font-weight: 800; color: #d94f87; margin-top: 14px; }
+  .tiny-note { text-align: center; font-size: .8rem; color: #b27b95; margin-top: 18px; }
+  .confetti { position: fixed; pointer-events: none; z-index: 5; animation: fall 1.6s ease-out forwards; }
+  @keyframes fall { to { transform: translateY(95vh) rotate(650deg); opacity: 0; } }
+  .hug-pop { font-size: 3rem; animation: hug .6s ease; }
+  @keyframes hug { 50% { transform: scale(1.25); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<div class="floaties" id="floaties" aria-hidden="true"></div>
+<main class="wrap">
+  <header>
+    <div class="tiny-label">a tiny corner of the internet ♡</div>
+    <h1>A Little Game<br>for My Love</h1>
+    <p class="subtitle">A few tiny taps, three little hearts, and one important reminder: you mean so much to me.</p>
+  </header>
+
+  <section class="card center" id="welcome">
+    <div class="hero-art" aria-hidden="true">🧸💗</div>
+    <h2>Hi, Love. This is for you.</h2>
+    <p class="muted">No scores to worry about. No wrong answers. Just a small surprise made to hopefully put a little smile on your face.</p>
+    <p>Ready, pretty girl? 🌷</p>
+    <div class="btnrow"><button class="btn primary" id="startBtn">Start our little game ✨</button></div>
+  </section>
+
+  <section class="card hidden" id="game" aria-live="polite">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="levelLabel">Little heart 1 of 3</span><span id="scoreLabel">♡ 0 / 3</span></div>
+      <div class="progress"><div class="bar" id="progressBar"></div></div>
+    </div>
+    <div class="center">
+      <div class="hero-art" id="gameArt" aria-hidden="true">🌷</div>
+      <h2 id="questionTitle">A tiny question...</h2>
+      <p class="muted" id="questionText"></p>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback hidden" id="feedback" role="status"></div>
+    <div class="btnrow"><button class="btn primary hidden" id="nextBtn">Collect my heart 💗</button></div>
+    <div class="heart-board" aria-label="Hearts collected">
+      <div class="heart-token" id="heart0">♡</div><div class="heart-token" id="heart1">♡</div><div class="heart-token" id="heart2">♡</div>
+    </div>
+  </section>
+
+  <section class="card center hidden" id="ending">
+    <div class="hero-art" aria-hidden="true">💌🌸</div>
+    <div class="tiny-label">you found all three hearts</div>
+    <h2>Surprise, my Love. ♡</h2>
+    <p class="muted">Your final reward isn't a prize. It's a little piece of my heart, just for you.</p>
+    <div class="btnrow"><button class="btn primary" id="letterBtn">Open your little letter 💌</button></div>
+    <div id="letterArea" class="hidden" style="margin-top:20px">
+      <div class="letter" id="letterText">Hi, Love,
+
+I hope this little game made you smile, even if it was only for a moment.
+
+I want you to remember that you don't have to be cheerful all the time, and you never have to pretend to be okay with me. You can be quiet, shy, silly, sleepy, or have one of those days when everything feels like a lot. You are still so precious to me.
+
+If I could be beside you right now, I'd hold your hand, give you the gentlest hug, and remind you that you don't have to do anything special to be loved. Being you is already enough.
+
+Thank you for being the person you are. I'm really glad I get to care about you.
+
+Whenever you need a tiny reminder, come back here. This little corner is yours. ♡</div>
+      <div class="signature">Always cheering for you,<br>Your boyfriend ♡</div>
+      <div class="btnrow"><button class="btn primary" id="hugBtn">Send me a virtual hug 🫂</button><button class="btn secondary" id="againBtn">Play again 🌷</button></div>
+      <div class="center hidden" id="hugMessage" style="margin-top:18px"><div class="hug-pop">🫂💗</div><strong>Hug delivered!</strong><p class="muted">Imagine me squeezing you gently and not letting go until you smile. ♡</p></div>
+    </div>
+  </section>
+  <p class="tiny-note">made with a little love, just for you ♡</p>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const questions = [
+    {
+      art: "🌷", title: "A tiny reminder", text: "If today feels a little heavy, what do you deserve?",
+      choices: [
+        ["A) To be perfect all day", "Not at all, Love. You never need to be perfect to be precious. 💗", false],
+        ["B) Kindness, rest, and a little love", "Exactly. And I hope you give yourself some of that today. You deserve it. 🌷", true],
+        ["C) To hide every feeling", "You don't have to hide your feelings with the people who care about you. ♡", false]
+      ]
+    },
+    {
+      art: "🐻", title: "Important bear business", text: "Your tiny teddy has one job. What should it deliver to you?",
+      choices: [
+        ["A) A very serious spreadsheet", "The teddy says… maybe later. Right now, it's carrying hugs. 😂", false],
+        ["B) One warm hug and a forehead kiss", "Teddy understood the assignment. One hug, one forehead kiss, and extra coziness. 🧸", true],
+        ["C) A lecture about doing more", "Absolutely not. Teddy is officially on your side and votes for a little rest. 💞", false]
+      ]
+    },
+    {
+      art: "💌", title: "One last little thing", text: "What do I hope you remember, even on a day you don't feel your best?",
+      choices: [
+        ["A) You have to earn love", "Nope, sweetheart. Love isn't a test you have to pass. ♡", false],
+        ["B) You are loved just as you are", "Yes, Love. Not because you did everything right, but because you're you. 🥹", true],
+        ["C) You should never need anyone", "It's okay to need comfort sometimes. You don't have to do everything alone. 🌸", false]
+      ]
+    }
+  ];
+  let current = 0, selected = false, hearts = 0;
+  function floaties() {
+    const holder = $("floaties");
+    const symbols = ["♡", "✿", "♥", "✧"];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement("span");
+      el.className = "floaty"; el.textContent = symbols[i % symbols.length];
+      el.style.left = (Math.random() * 100) + "%";
+      el.style.animationDuration = (10 + Math.random() * 13) + "s";
+      el.style.animationDelay = (-Math.random() * 20) + "s";
+      el.style.fontSize = (14 + Math.random() * 18) + "px";
+      el.style.color = i % 2 ? "#ef8db4" : "#c6a4e8";
+      holder.appendChild(el);
+    }
+  }
+  function sprinkle() {
+    const bits = ["💗", "🌸", "✨", "♡", "💖"];
+    for (let i = 0; i < 22; i++) {
+      const el = document.createElement("span");
+      el.className = "confetti"; el.textContent = bits[Math.floor(Math.random() * bits.length)];
+      el.style.left = Math.random() * 100 + "vw"; el.style.top = "-25px";
+      el.style.fontSize = (16 + Math.random() * 14) + "px";
+      el.style.animationDelay = Math.random() * .35 + "s";
+      document.body.appendChild(el); setTimeout(() => el.remove(), 2200);
+    }
+  }
+  function renderQuestion() {
+    selected = false;
+    const q = questions[current];
+    $("levelLabel").textContent = `Little heart ${current + 1} of 3`;
+    $("scoreLabel").textContent = `♡ ${hearts} / 3`;
+    $("progressBar").style.width = `${(current / 3) * 100}%`;
+    $("gameArt").textContent = q.art;
+    $("questionTitle").textContent = q.title;
+    $("questionText").textContent = q.text;
+    $("feedback").classList.add("hidden");
+    $("nextBtn").classList.add("hidden");
+    $("choices").innerHTML = "";
+    q.choices.forEach((choice, i) => {
+      const btn = document.createElement("button");
+      btn.className = "choice"; btn.textContent = choice[0];
+      btn.addEventListener("click", () => choose(i, btn));
+      $("choices").appendChild(btn);
+    });
+  }
+  function choose(index, btn) {
+    if (selected) return;
+    selected = true;
+    const q = questions[current], choice = q.choices[index];
+    [...$("choices").children].forEach(b => b.disabled = true);
+    btn.classList.add("selected");
+    if (choice[2]) {
+      hearts++;
+      $("feedback").textContent = choice[1];
+      $("heart" + current).textContent = "💗";
+      $("heart" + current).classList.add("earned");
+      sprinkle();
+    } else {
+      $("feedback").textContent = choice[1] + " Here's a little heart for trying, anyway. ♡";
+      $("heart" + current).textContent = "💗";
+      $("heart" + current).classList.add("earned");
+      hearts++;
+    }
+    $("scoreLabel").textContent = `♡ ${hearts} / 3`;
+    $("feedback").classList.remove("hidden");
+    $("nextBtn").textContent = current === 2 ? "See your surprise 💌" : "Collect my heart 💗";
+    $("nextBtn").classList.remove("hidden");
+  }
+  $("startBtn").addEventListener("click", () => {
+    $("welcome").classList.add("hidden"); $("game").classList.remove("hidden");
+    renderQuestion(); window.scrollTo({top: 0, behavior: "smooth"});
+  });
+  $("nextBtn").addEventListener("click", () => {
+    current++;
+    if (current >= questions.length) {
+      $("game").classList.add("hidden"); $("ending").classList.remove("hidden");
+      $("progressBar").style.width = "100%"; sprinkle();
+    } else renderQuestion();
+    window.scrollTo({top: 0, behavior: "smooth"});
+  });
+  $("letterBtn").addEventListener("click", () => {
+    $("letterArea").classList.remove("hidden"); $("letterBtn").classList.add("hidden");
+    sprinkle(); $("letterArea").scrollIntoView({behavior: "smooth", block: "nearest"});
+  });
+  $("hugBtn").addEventListener("click", () => {
+    $("hugMessage").classList.remove("hidden"); sprinkle();
+  });
+  $("againBtn").addEventListener("click", () => {
+    current = 0; hearts = 0;
+    for (let i = 0; i < 3; i++) { $("heart" + i).textContent = "♡"; $("heart" + i).classList.remove("earned"); }
+    $("letterArea").classList.add("hidden"); $("letterBtn").classList.remove("hidden"); $("hugMessage").classList.add("hidden");
+    $("ending").classList.add("hidden"); $("game").classList.remove("hidden"); renderQuestion();
+    window.scrollTo({top: 0, behavior: "smooth"});
+  });
+  floaties();
+})();
+</script>
+</body>
+</html>
