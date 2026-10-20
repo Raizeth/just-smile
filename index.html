@@ -76,7 +76,7 @@
   <header>
     <div class="tiny-label">a tiny corner of the internet ♡</div>
     <h1>A Little Game<br>for My Love</h1>
-    <p class="subtitle">A few tiny taps, three little hearts, and one important reminder: you mean so much to me.</p>
+    <p class="subtitle">A few tiny taps, three pieces of my heart, and one important reminder: you mean so much to me.</p>
   </header>
 
   <section class="card center" id="welcome">
@@ -89,7 +89,7 @@
 
   <section class="card hidden" id="game" aria-live="polite">
     <div class="progress-wrap">
-      <div class="progress-top"><span id="levelLabel">Little heart 1 of 3</span><span id="scoreLabel">♡ 0 / 3</span></div>
+      <div class="progress-top"><span id="levelLabel">Piece of my heart 1 of 3</span><span id="scoreLabel">♡ 0 / 3</span></div>
       <div class="progress"><div class="bar" id="progressBar"></div></div>
     </div>
     <div class="center">
@@ -109,21 +109,21 @@
     <div class="hero-art" aria-hidden="true">💌🌸</div>
     <div class="tiny-label">you found all three hearts</div>
     <h2>Surprise, my Love. ♡</h2>
-    <p class="muted">Your final reward isn't a prize. It's a little piece of my heart, just for you.</p>
+    <p class="muted">Your final reward isn't a prize. It's a piece of my heart, just for you.</p>
     <div class="btnrow"><button class="btn primary" id="letterBtn">Open your little letter 💌</button></div>
     <div id="letterArea" class="hidden" style="margin-top:20px">
-      <div class="letter" id="letterText">Hi, Love,
+      <div class="letter" id="letterText">Hi, Love
 
 I hope this little game made you smile, even if it was only for a moment.
 
-I want you to remember that you don't have to be cheerful all the time, and you never have to pretend to be okay with me. You can be quiet, shy, silly, sleepy, or have one of those days when everything feels like a lot. You are still so precious to me.
+I want you to remember that you don't have to be cheerful all the time, and you never have to pretend to be okay with me. You can be quiet, shy, silly, sleepy, or have one of those days when everything feels like a lot. You are so and will always be precious to me.
 
 If I could be beside you right now, I'd hold your hand, give you the gentlest hug, and remind you that you don't have to do anything special to be loved. Being you is already enough.
 
 Thank you for being the person you are. I'm really glad I get to care about you.
 
 Whenever you need a tiny reminder, come back here. This little corner is yours. ♡</div>
-      <div class="signature">Always cheering for you,<br>Your boyfriend ♡</div>
+      <div class="signature">Always cheering for you,<br>Hopeless romantic who promised to give you his whole future ♡</div>
       <div class="btnrow"><button class="btn primary" id="hugBtn">Send me a virtual hug 🫂</button><button class="btn secondary" id="againBtn">Play again 🌷</button></div>
       <div class="center hidden" id="hugMessage" style="margin-top:18px"><div class="hug-pop">🫂💗</div><strong>Hug delivered!</strong><p class="muted">Imagine me squeezing you gently and not letting go until you smile. ♡</p></div>
     </div>
@@ -135,27 +135,27 @@ Whenever you need a tiny reminder, come back here. This little corner is yours. 
   const $ = id => document.getElementById(id);
   const questions = [
     {
-      art: "🌷", title: "A tiny reminder", text: "If today feels a little heavy, what do you deserve?",
+      art: "🌷", title: "A tiny reminder", text: "Love, if today feels a little heavy, what do you think you deserve?",
       choices: [
-        ["A) To be perfect all day", "Not at all, Love. You never need to be perfect to be precious. 💗", false],
-        ["B) Kindness, rest, and a little love", "Exactly. And I hope you give yourself some of that today. You deserve it. 🌷", true],
-        ["C) To hide every feeling", "You don't have to hide your feelings with the people who care about you. ♡", false]
+        ["A) To be perfect all day", "Not at all, Love. It was never necessary to be perfect. You are precious to me just for being the way you are 💗", false],
+        ["B) Kindness, rest, and a little love", "Exactly. And I hope you give yourself kindness, rest and a little love for today. You deserve it. 🌷", true],
+        ["C) To conceal emotions", "You don't have to. We already spoke our hearts and minds that we will be 100% transparent with each other, if today isn't good, tell me and I will make everything better for you. ♡", false]
       ]
     },
     {
-      art: "🐻", title: "Important bear business", text: "Your tiny teddy has one job. What should it deliver to you?",
+      art: "🐻", title: "Bear-y important reminder (Sorry, but I'm trynna be witty and cute for you hehe. Mag smile ka na kasi)", text: "What do you think is something that you need right now?",
       choices: [
-        ["A) A very serious spreadsheet", "The teddy says… maybe later. Right now, it's carrying hugs. 😂", false],
+        ["A) Focus on work", "Teddy bear says… okay. But right now, it's carrying hugs. And don't forget to drink your water 😂", false],
         ["B) One warm hug and a forehead kiss", "Teddy understood the assignment. One hug, one forehead kiss, and extra coziness. 🧸", true],
-        ["C) A lecture about doing more", "Absolutely not. Teddy is officially on your side and votes for a little rest. 💞", false]
+        ["C) A lecture about doing more", "Absolutely not. You always do a lot more than what you need to do. So Teddy is officially on your side and votes for a little rest. 💞", false]
       ]
     },
     {
       art: "💌", title: "One last little thing", text: "What do I hope you remember, even on a day you don't feel your best?",
       choices: [
-        ["A) You have to earn love", "Nope, sweetheart. Love isn't a test you have to pass. ♡", false],
-        ["B) You are loved just as you are", "Yes, Love. Not because you did everything right, but because you're you. 🥹", true],
-        ["C) You should never need anyone", "It's okay to need comfort sometimes. You don't have to do everything alone. 🌸", false]
+        ["A) You have to be the best at what you do", "No Love. You were and always will be the best woman, the best person, and the best partner that I've had. You are the best thing that happened in my life. ♡", false],
+        ["B) You are loved just as you are", "Yes, Love. Not because you did everything right, but because I've fallen for the woman which is you just for being yourself. 🥹", true],
+        ["C) You can get by even in being alone", "It's okay to need comfort sometimes. You don't have to do everything alone. Always remember that from here on out, I'm always right by your side. 🌸", false]
       ]
     }
   ];
@@ -188,7 +188,7 @@ Whenever you need a tiny reminder, come back here. This little corner is yours. 
   function renderQuestion() {
     selected = false;
     const q = questions[current];
-    $("levelLabel").textContent = `Little heart ${current + 1} of 3`;
+    $("levelLabel").textContent = `Pieces of my heart ${current + 1} of 3`;
     $("scoreLabel").textContent = `♡ ${hearts} / 3`;
     $("progressBar").style.width = `${(current / 3) * 100}%`;
     $("gameArt").textContent = q.art;
